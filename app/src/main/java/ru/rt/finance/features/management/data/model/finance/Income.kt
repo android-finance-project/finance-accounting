@@ -1,16 +1,21 @@
 package ru.rt.finance.features.management.data.model.finance
 
-import ru.rt.finance.features.management.data.model.dictionary.DicIncome
+import ru.rt.finance.features.dictonary.data.model.dictionary.DicIncome
 import ru.rt.finance.features.user.data.model.User
 import java.time.LocalDate
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 /**
  * Доход
  */
+
+@Entity(tableName =  "Income")
 data class Income(
     /**
      * PK
      */
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
 
     /**

@@ -1,13 +1,18 @@
 package ru.rt.finance.features.user.data.model
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 
 /**
  * Пользователь
  *
  */
+@Entity(tableName = "User")
 data class User(
     /**
      *
      */
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
     /**
      *
