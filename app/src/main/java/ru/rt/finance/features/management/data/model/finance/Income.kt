@@ -6,40 +6,27 @@ import java.time.LocalDate
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-/**
- * Доход
- */
 
-@Entity(tableName =  "Income")
+/**  Таблица для оперативного учета доходов */
+
+@Entity(tableName = "Income")
 data class Income(
-    /**
-     * PK
-     */
+
     @PrimaryKey(autoGenerate = true)
     val id: Int,
 
-    /**
-     * Пользователь (дефолтный по умолчанию)
-     */
+    /**     * Пользователь (дефолтный по умолчанию)     */
     val user: User,
 
-    /**
-     * Категория
-     */
+    /**     * Категория     */
     val category: DicIncome? = null,
 
-    /**
-     * Дата
-     */
+    /**     * Дата     */
     val date: LocalDate = LocalDate.now(),
 
-    /**
-     * Сумма (в копейках)
-     */
+    /**     * Сумма (в копейках)     */
     val sum: Long,
 
-    /**
-     * Комментарий
-     */
+    /**     * Комментарий     */
     val comment: String? = null,
 )

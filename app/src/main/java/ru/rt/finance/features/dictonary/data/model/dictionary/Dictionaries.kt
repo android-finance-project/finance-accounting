@@ -1,43 +1,31 @@
 package ru.rt.finance.features.dictonary.data.model.dictionary
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-/**
- * Категория доход
- */
-@Entity(tableName = Dictonary.tableNameDicIncome)
+/**  Категория доход */
+@Entity(tableName = Dictionary.tableNameDicIncome)
 data class DicIncome(
-    /**
-     * PK
-     */
+    /** PK */
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    /**
-     *
-     */
+
     val name: String? = null,
 
-    //val picture: URI
-)
+    )
 
-/**
- * Категория Расход
- */
-@Entity(tableName = Dictonary.tableNameDicExpense)
+/**  Категория Расход */
+@Entity(tableName = Dictionary.tableNameDicExpense)
 data class DicExpense(
-    /**
-     * PK
-     */
+    /** PK  */
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    /**
-     *
-     */
-    val name: String? = null,
-    //val picture: URI
-)
 
-object  Dictonary {
+    val name: String? = null,
+
+    )
+
+object Dictionary {
     const val tableNameDicIncome = "dicincome"
     const val tableNameDicExpense = "dicexpense"
 }

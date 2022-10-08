@@ -4,61 +4,34 @@ import ru.rt.finance.features.dictonary.data.model.dictionary.DicExpense
 import ru.rt.finance.features.user.data.model.User
 import java.time.LocalDate
 
-//import androidx.room.*
-//import android.os.Parcelable
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-//import kotlinx.android.parcel.Parcelize
 
-/**
- * Расход
- */
+/** таблица для учета оперативных расходов */
 
-
-
-
-//@Parcelize
 @Entity(tableName = "Expense")
 data class Expense(
 
-    /**
-     * PK
-     */
     @PrimaryKey(autoGenerate = true)
     val id: Int,
 
-    /**
-     * Пользователь (дефолтный по умолчанию)
-     */
+    /**      Пользователь (дефолтный по умолчанию)     */
     val user: User,
 
-    /**
-     * Категория
-     */
+    /**      Категория     */
     val category: DicExpense? = null,
 
-    /**
-     * Дата
-     */
+    /**      Дата     */
     val date: LocalDate = LocalDate.now(),
 
-    /**
-     * Сумма (в копейках)
-     */
+    /**      Сумма (в копейках)     */
     val sum: Long,
 
-    /**
-     * Комментарий
-     */
+    /**      Комментарий     */
     val comment: String? = null,
 )
 
 /*
 todo ???
-@Entity(foreignKeys = @ForeignKey(
-    entity = Expense.class,
-            parentColumns = "id",
-             childColumns = "category")
-)
+  set relations of ORM
 */

@@ -1,17 +1,13 @@
 package ru.rt.finance.features.dictonary
+
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import ru.rt.finance.core.localdatabase.DaoInterface.DicExpenseDAO
-import ru.rt.finance.core.localdatabase.DaoInterface.DicIncomeDAO
-//import ru.rt.finance.features.dictonary.data.localdb.DicExpense
-//import ru.rt.finance.features.dictonary.data.
+import ru.rt.finance.core.localdatabase.daointerface.DicExpenseDAO
+import ru.rt.finance.core.localdatabase.daointerface.DicIncomeDAO
 import ru.rt.finance.features.dictonary.data.model.dictionary.DicExpense
-
 import ru.rt.finance.features.dictonary.data.model.dictionary.DicIncome
 
-
-class DicExpenseRepository(private val dicExpenseSource: DicExpenseDAO, private val dispatcher : CoroutineDispatcher) {
-    //ф-ция считывания
+class DicExpenseRepository(private val dicExpenseSource: DicExpenseDAO, private val dispatcher: CoroutineDispatcher) {
 
     suspend fun addDicExpense(info: DicExpense) {
         withContext(dispatcher) {
@@ -25,7 +21,6 @@ class DicExpenseRepository(private val dicExpenseSource: DicExpenseDAO, private 
         }
     }
 
-
     suspend fun getDicExpenseById(id: Int) {
         withContext(dispatcher) {
             dicExpenseSource.getDicExpenseById(id)
@@ -38,47 +33,42 @@ class DicExpenseRepository(private val dicExpenseSource: DicExpenseDAO, private 
         }
     }
 
-    suspend fun searchDicExpense(searchQuery: String) {
+    suspend fun searchByName(searchQuery: String) {
         withContext(dispatcher) {
-            dicExpenseSource.searchDatabase(searchQuery)
+            dicExpenseSource.searchByName(searchQuery)
         }
     }
 }
 
-   class DicIncomeRepository(private val dicIncomeSource: DicIncomeDAO, private val dispatcher : CoroutineDispatcher) {
+class DicIncomeRepository(private val dicIncomeSource: DicIncomeDAO, private val dispatcher: CoroutineDispatcher) {
 
-        suspend fun addDicIncome(info: DicIncome) {
-            withContext(dispatcher) {
-                dicIncomeSource.addDicIncome(info)
-            }
-        }
-
-        suspend fun updateDicIncome(info: DicIncome) {
-            withContext(dispatcher) {
-                dicIncomeSource.updateDicIncome(info)
-            }
-        }
-
-       suspend fun getDicIncomeById(id: Int) {
-           withContext(dispatcher) {
-               dicIncomeSource.getDicIncomeById(id)
-           }
-       }
-
-        suspend fun deleteDicIncome(info: DicIncome) {
-            withContext(dispatcher) {
-                dicIncomeSource.deleteDicIncome(info)
-            }
-        }
-
-        suspend fun searchDicIncome(searchQuery: String) {
-            withContext(dispatcher) {
-                dicIncomeSource.searchDatabase(searchQuery)
-            }
+    suspend fun addDicIncome(info: DicIncome) {
+        withContext(dispatcher) {
+            dicIncomeSource.addDicIncome(info)
         }
     }
 
+    suspend fun updateDicIncome(info: DicIncome) {
+        withContext(dispatcher) {
+            dicIncomeSource.updateDicIncome(info)
+        }
+    }
 
+    suspend fun getDicIncomeById(id: Int) {
+        withContext(dispatcher) {
+            dicIncomeSource.getDicIncomeById(id)
+        }
+    }
 
+    suspend fun deleteDicIncome(info: DicIncome) {
+        withContext(dispatcher) {
+            dicIncomeSource.deleteDicIncome(info)
+        }
+    }
 
-
+    suspend fun searchByName(searchQuery: String) {
+        withContext(dispatcher) {
+            dicIncomeSource.searchByName(searchQuery)
+        }
+    }
+}

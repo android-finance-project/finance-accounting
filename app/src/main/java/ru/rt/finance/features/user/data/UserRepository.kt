@@ -7,6 +7,12 @@ import ru.rt.finance.features.user.data.model.User
 
 class UserRepository(private val userSource: UserDAO, private val dispatcher: CoroutineDispatcher) {
 
+    /*init {
+     todo - application как параметр через di(koin)
+        val user = FinanceInstantDatabase.getDataBase(application).user()
+    }
+     */
+
     suspend fun addUser(info: User) {
         withContext(dispatcher) {
             userSource.addUser(info)

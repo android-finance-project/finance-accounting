@@ -1,7 +1,7 @@
 package ru.rt.finance.features.export.data.model
 
 //todo
-data class ExpIncomeExpense(
+data class ExportIncomeExpense(
     // Структура для файлов Экспорта
     val id: Int,
     val idPerson: Int,
@@ -13,8 +13,8 @@ data class ExpIncomeExpense(
 )
 
 //todo
-data class ImpIncomeExpense(
-    // Структура для файлов Экспорта
+data class ImportIncomeExpense(
+    // Структура для файлов Импорта
     val id: Int,
     val category: Int? = null,
     val flagCategory: Int? = null,

@@ -1,35 +1,32 @@
 package ru.rt.finance.features.user.data.localdb
 
 import kotlinx.coroutines.flow.Flow
-import ru.rt.finance.core.localdatabase.DaoInterface.UserDAO
+import ru.rt.finance.core.localdatabase.daointerface.UserDAO
 import ru.rt.finance.features.user.data.model.User
 
-class User(private val UserDAO : UserDAO) {
- val UserInfo: List<User>? = UserDAO.getInfo()
- suspend fun addUser(info : User){
-     UserDAO.addUser(info)
+class User(private val userDAO: UserDAO) {
+
+    suspend fun getInfo() {
+        userDAO.getInfo()
     }
 
- suspend fun updateUser(info : User){
-     UserDAO.updateUser(info)
- }
-
-    suspend fun deleteUser(info: User){
-        UserDAO.deleteUser(info)
+    suspend fun addUser(info: User) {
+        userDAO.addUser(info)
     }
 
-    suspend fun deleteAllExpense(){
-        UserDAO.deleteAllUser()
+    suspend fun updateUser(info: User) {
+        userDAO.updateUser(info)
     }
 
-    fun searchDatabaseUser(searchQuery: String): Flow<List<User>?> {
-        return UserDAO.searchDatabase(searchQuery)
+    suspend fun deleteUser(info: User) {
+        userDAO.deleteUser(info)
     }
 
+    suspend fun deleteAllExpense() {
+        userDAO.deleteAllUser()
+    }
 
-
+    suspend fun searchByName(searchQuery: String): List<User>? {
+        return userDAO.searchByName(searchQuery)
+    }
 }
-
-
-
-

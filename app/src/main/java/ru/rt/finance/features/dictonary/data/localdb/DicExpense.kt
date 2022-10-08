@@ -1,41 +1,35 @@
 package ru.rt.finance.features.dictonary.data.localdb
-import kotlinx.coroutines.flow.Flow
-import ru.rt.finance.core.localdatabase.DaoInterface.DicExpenseDAO
+
+import ru.rt.finance.core.localdatabase.daointerface.DicExpenseDAO
 import ru.rt.finance.features.dictonary.data.model.dictionary.DicExpense
 
+class DicExpense(private val dicExpenseDAO: DicExpenseDAO) {
 
-class DicExpense(private val DicExpenseDAO : DicExpenseDAO) {
-
-
-    val DicExpenseInfo: /*LiveData<*/List<DicExpense>? = DicExpenseDAO.getInfo()
-
-    suspend fun addDicExpense(info : DicExpense ){
-        DicExpenseDAO.addDicExpense(info)
+    suspend fun getInfo() {
+        dicExpenseDAO.getInfo()
     }
 
-   suspend fun updateDicExpense(info : DicExpense){
-       DicExpenseDAO.updateDicExpense(info)
+    suspend fun addDicExpense(info: DicExpense) {
+        dicExpenseDAO.addDicExpense(info)
     }
 
-
-
-    suspend fun deleteDicExpense(info: DicExpense){
-        DicExpenseDAO.deleteDicExpense(info)
+    suspend fun updateDicExpense(info: DicExpense) {
+        dicExpenseDAO.updateDicExpense(info)
     }
 
-
-    suspend fun getDicExpenseById(id : Int) {
-        DicExpenseDAO.getDicExpenseById(id)
+    suspend fun deleteDicExpense(info: DicExpense) {
+        dicExpenseDAO.deleteDicExpense(info)
     }
 
-
-
-    suspend fun deleteAllDicExpense(){
-        DicExpenseDAO.deleteAllDicExpense()
+    suspend fun getDicExpenseById(id: Int) {
+        dicExpenseDAO.getDicExpenseById(id)
     }
 
-    fun searchDatabase(searchQuery: String): Flow<List<DicExpense>?> {
-        return DicExpenseDAO.searchDatabase(searchQuery)
+    suspend fun deleteAllDicExpense() {
+        dicExpenseDAO.deleteAllDicExpense()
     }
 
+    suspend fun searchByName(searchQuery: String): List<DicExpense>? {
+        return dicExpenseDAO.searchByName(searchQuery)
+    }
 }
