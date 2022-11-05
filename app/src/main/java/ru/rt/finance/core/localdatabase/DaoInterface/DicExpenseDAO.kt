@@ -36,4 +36,7 @@ interface DicExpenseDao {
 
     @Query("SELECT * FROM  ${Dictionary.tableNameDicExpense}  WHERE name_dic_expense_entity LIKE '%' || :searchQuery || '%' ")
     suspend fun searchByName(searchQuery: String): List<DicExpenseEntity>?
+
+    @Query("SELECT t1.id_dic_expense_entity FROM ${Dictionary.tableNameDicExpense} As t1  ORDER BY id_dic_expense_entity DESC LIMIT 1")
+    suspend fun getLastKey(): Int
 }
