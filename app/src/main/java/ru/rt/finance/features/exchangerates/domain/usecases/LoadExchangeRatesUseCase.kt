@@ -17,6 +17,8 @@ class LoadExchangeRatesUseCase(private val repository: ExchangeRatesRepository) 
     }
 
     companion object {
-        private val currencyTypes = CurrencyType.values().map { it.name }
+        private val currencyTypes = CurrencyType.values()
+            .filterNot { it == CurrencyType.RUB }
+            .map { it.name }
     }
 }

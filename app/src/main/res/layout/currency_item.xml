@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
@@ -15,19 +14,40 @@
             android:id="@+id/currency_symbol_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            tools:ignore="ContentDescription"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <ImageView
-            android:id="@+id/growing_image"
+        <LinearLayout
+            android:id="@+id/converted_rate_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:background="@drawable/border_currencies"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/value_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            <ImageView
+                android:id="@+id/growing_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="ContentDescription,MissingPrefix"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/value_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="1dp"
+                android:paddingEnd="1dp"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <ImageView
+                android:id="@+id/base_currency_symbol_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="ContentDescription"
+                tools:srcCompat="@tools:sample/avatars" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

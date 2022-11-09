@@ -7,6 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.rt.finance.databinding.FragmentMainBinding
 import ru.rt.finance.features.exchangerates.presentation.adapters.ExchangeRatesAdapter
@@ -34,11 +39,15 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = ExchangeRatesAdapter(mutableListOf())
         binding.currencies.adapter = adapter
-    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        exchangeRatesViewModel.state.observe(this, ::handleState)
+        viewLifecycleOwner.lifecycleScope
+            .launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    exchangeRatesViewModel.startHandle()
+                    exchangeRatesViewModel.state.collect(::handleState)
+                }
+            }
+            .invokeOnCompletion { exchangeRatesViewModel.stopHandle() }
     }
 
     private fun handleState(state: ExchangeRatesState) {
@@ -52,13 +61,18 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun refreshState(state: ExchangeRatesState) =
         with(binding) {
-            progressBar.isVisible = state is ExchangeRatesState.Loading
+            exchangesProgressBar.isVisible = state is ExchangeRatesState.Loading
             currencies.isVisible = state is ExchangeRatesState.Data
+            lastUpdateLayout.isVisible = state is ExchangeRatesState.Data
         }
 
     private fun ExchangeRatesState.Data.handle() {
-        adapter.currencies.clear()
-        adapter.currencies.addAll(data.currencies)
+        binding.lastUpdateText.text = data.lastUpdate.format(dateFormat)
+        if (adapter.currencies.isEmpty()) {
+            adapter.currencies.addAll(data.currencies)
+        } else {
+            adapter.updateData(data.currencies.associateBy { it.symbol })
+        }
     }
 
     private fun ExchangeRatesState.Error.handle() =
@@ -67,5 +81,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        private val dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
     }
 }

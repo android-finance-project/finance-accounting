@@ -4,5 +4,5 @@ enum class CurrencyType {
     RUB,
     USD,
     EUR,
-    GBR,
+    CNY,
 }

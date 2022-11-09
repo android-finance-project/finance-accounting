@@ -1,16 +1,19 @@
 package ru.rt.finance.features.exchangerates.data.network
 
-import io.ktor.client.*
-import io.ktor.client.engine.okhttp.*
-import io.ktor.client.plugins.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.logging.*
-import io.ktor.client.plugins.websocket.WebSockets
-import io.ktor.client.request.*
-import io.ktor.http.*
-import java.util.concurrent.TimeUnit
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.logging.DEFAULT
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.accept
+import io.ktor.http.ContentType
+import io.ktor.http.URLProtocol
+import io.ktor.http.contentType
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import okhttp3.OkHttpClient
 
 /**
  * Класс для сборки клиентов
@@ -20,14 +23,13 @@ import okhttp3.OkHttpClient
 class HttpClientBuilder(private val baseUrl: String) {
 
     private val json = Json {
-        encodeDefaults = true
         ignoreUnknownKeys = true
     }
 
     val httpClient by lazy {
         HttpClient(OkHttp) {
             install(ContentNegotiation) {
-                json
+                json(json)
             }
 
             install(Logging) {
