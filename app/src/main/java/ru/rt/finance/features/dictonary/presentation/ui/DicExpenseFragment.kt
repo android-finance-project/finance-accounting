@@ -2,9 +2,14 @@ package ru.rt.finance.features.dictonary.presentation.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -34,8 +39,33 @@ class DicExpenseFragment : Fragment(R.layout.fragment_list_dic_expense) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dicExpenseListAdapter = DicExpenseListAdapter() { position -> OnEditDicExpenseClick(position) }
+        val menuHost: MenuHost = requireActivity()
 
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+
+                menu.clear()
+                menuInflater.inflate(R.menu.top_nav_menu_dictonary, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+
+                when (menuItem.itemId) {
+                    R.id.filter -> { //TODO:
+                    }
+                    R.id.sort -> { //TODO:
+                        true
+                    }
+                    R.id.search -> { //TODO:
+                    }
+                    else -> {//TODO:
+                    }
+                }
+                return true
+            }
+        }, viewLifecycleOwner)
+
+        dicExpenseListAdapter = DicExpenseListAdapter() { position -> OnEditDicExpenseClick(position) }
 
         binding.recyclerViewDicExpense.adapter = dicExpenseListAdapter
 

@@ -1,7 +1,7 @@
 package ru.rt.finance.features.dictonary
 
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.CoroutineDispatcher
 import ru.rt.finance.core.localdatabase.daointerface.DicExpenseDao
 import ru.rt.finance.core.localdatabase.daointerface.DicIncomeDao
 import ru.rt.finance.core.utils.safeUnitCall
@@ -11,14 +11,10 @@ import ru.rt.finance.features.dictonary.data.model.dictionary.DicIncomeEntity
 
 class DicExpenseRepository(private val dicExpenseSource: DicExpenseDao, private val dispatcher: CoroutineDispatcher) {
 
-    suspend fun getInfo(): List<DicExpenseEntity>? {
-        val ret: List<DicExpenseEntity>?
+    suspend fun getInfo(): List<DicExpenseEntity>? =
         withContext(dispatcher) {
-            ret = dicExpenseSource.getInfo()
-
+            dicExpenseSource.getInfo()
         }
-        return ret
-    }
 
     suspend fun addDicExpense(info: DicExpenseEntity) {
         withContext(dispatcher) {

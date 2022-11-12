@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.rt.finance.R
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.rt.finance.databinding.FragmentDicExpenseEditBinding
 import ru.rt.finance.features.dictonary.presentation.EditDicExpenseContract.Action
 import ru.rt.finance.features.dictonary.presentation.EditDicExpenseContract.Event
@@ -25,6 +25,7 @@ class EditDicExpenseFragment : Fragment(R.layout.fragment_dic_expense_edit) {
     private lateinit var binding: FragmentDicExpenseEditBinding
 
     private lateinit var nameDicExpense: String
+
     private lateinit var idDicExpense: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

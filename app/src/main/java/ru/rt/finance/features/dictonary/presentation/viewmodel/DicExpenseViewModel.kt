@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import ru.rt.finance.R
 import ru.rt.finance.features.dictonary.domain.LoadDicExpensesUseCase
 import ru.rt.finance.features.dictonary.presentation.DicExpenseContract.State
 import ru.rt.finance.features.dictonary.presentation.DicExpenseContract.Action

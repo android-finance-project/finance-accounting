@@ -3,6 +3,7 @@ package ru.rt.finance.features.dictonary.presentation
 import ru.rt.finance.features.dictonary.data.model.dictionary.DicExpenseEntity
 
 class DicExpenseContract {
+
     sealed class State {
         object Loading : State()
         data class Error(val errorModel: ErrorModel) : State()

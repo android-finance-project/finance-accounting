@@ -3,8 +3,9 @@ package ru.rt.finance.features.dictonary.presentation.listadapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
+
 
 import ru.rt.finance.databinding.ListItemDicexpenseBinding
 import ru.rt.finance.features.dictonary.data.model.dictionary.DicExpenseEntity

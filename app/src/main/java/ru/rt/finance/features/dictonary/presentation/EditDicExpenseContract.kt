@@ -1,6 +1,7 @@
 package ru.rt.finance.features.dictonary.presentation
 
 class EditDicExpenseContract {
+
     sealed class State {
         object Initial : State()
         object Loading : State()
@@ -16,7 +17,7 @@ class EditDicExpenseContract {
     sealed class Event {
         data class OnSaveDicExpenseClick(
             val nameDicExpense: String,
-            val idDicExpense: Int,
+            val idDicExpense: Int
         ) : Event()
     }
 

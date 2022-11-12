@@ -14,9 +14,7 @@ class AddDicExpenseContract {
     }
 
     sealed class Event {
-        data class OnSaveDicExpenseClick(
-            val nameDicExpense: String,
-        ) : Event()
+        data class OnSaveDicExpenseClick(val nameDicExpense: String) : Event()
     }
 
     data class ErrorModel(val message: String)

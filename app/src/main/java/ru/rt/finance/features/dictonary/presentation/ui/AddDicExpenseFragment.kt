@@ -11,8 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.rt.finance.R
 import ru.rt.finance.databinding.FragmentDicExpenseAddBinding
+import ru.rt.finance.R
 import ru.rt.finance.features.dictonary.presentation.AddDicExpenseContract.Action
 import ru.rt.finance.features.dictonary.presentation.AddDicExpenseContract.Event
 import ru.rt.finance.features.dictonary.presentation.AddDicExpenseContract.State
@@ -52,7 +52,6 @@ class AddDicExpenseFragment : Fragment(R.layout.fragment_dic_expense_add) {
     }
 
     private fun handleAction(action: Action) {
-
         when (action) {
             is Action.DialogMessage -> {
                 Toast.makeText(context, action.message, Toast.LENGTH_SHORT).show()

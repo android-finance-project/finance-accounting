@@ -1,7 +1,8 @@
 package ru.rt.finance.features.dictonary.data.localdb
 
-import ru.rt.finance.core.localdatabase.daointerface.DicExpenseDao
 import ru.rt.finance.features.dictonary.data.model.dictionary.DicExpenseEntity
+import ru.rt.finance.core.localdatabase.daointerface.DicExpenseDao
+
 
 class DicExpenseLocalDataSource(private val dicExpenseDao: DicExpenseDao) {
 
