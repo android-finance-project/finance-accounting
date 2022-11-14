@@ -2,6 +2,7 @@ package ru.rt.finance.di
 
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import ru.rt.finance.features.aboutus.AboutUsRepository
 import ru.rt.finance.features.dictonary.DicExpenseRepository
 import ru.rt.finance.features.dictonary.DicIncomeRepository
 import ru.rt.finance.features.dictonary.presentation.viewmodel.AddDicExpenseViewModel
@@ -22,6 +23,7 @@ class DiRepository {
                 single { DicIncomeRepository(get(), get(named(DispatcherConstants.DISPATCHER_IO))) }
                 single { ExpenseRepository(get(), get(named(DispatcherConstants.DISPATCHER_IO))) }
                 single { IncomeRepository(get(), get(named(DispatcherConstants.DISPATCHER_IO))) }
+                single { AboutUsRepository(get(), get(named(DispatcherConstants.DISPATCHER_IO))) }
             }
     }
 }

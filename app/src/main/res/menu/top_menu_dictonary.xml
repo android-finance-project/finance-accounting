@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/sort"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/sort"
+        android:titleCondensed="@string/sort">
+        <menu >
+            <group android:id="@+id/group_sort" android:checkableBehavior="single">
+                <item android:id="@+id/submenu_sort_acs" android:title="По возрастанию" />
+                <item android:id="@+id/submenu_decs" android:title="По убыванию" />
+                <item android:id="@+id/submenu_free" android:title="Произвольный порядок" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/search"
+        android:titleCondensed="@string/search" />
+
+    <item
+        android:id="@+id/filter"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/filter"
+        android:titleCondensed="@string/filter" />
+</menu>
+

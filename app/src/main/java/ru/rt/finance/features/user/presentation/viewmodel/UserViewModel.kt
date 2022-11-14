@@ -1,4 +1,4 @@
-package ru.rt.finance.features.dictonary.presentation.viewmodel
+package ru.rt.finance.features.user.data.presentation.ui.activity.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,20 +10,18 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import ru.rt.finance.core.utils.SORT
-import ru.rt.finance.features.dictonary.domain.LoadDicExpensesUseCase
-import ru.rt.finance.features.dictonary.presentation.DicExpenseContract.State
-import ru.rt.finance.features.dictonary.presentation.DicExpenseContract.Action
-import ru.rt.finance.features.dictonary.presentation.DicExpenseContract.ErrorModel
-import ru.rt.finance.features.dictonary.presentation.DicExpenseContract.Event
+import ru.rt.finance.features.user.domain.LoadUsersUseCase
+import ru.rt.finance.features.user.presentation.UsersContract.Action
+import ru.rt.finance.features.user.presentation.UsersContract.ErrorModel
+import ru.rt.finance.features.user.presentation.UsersContract.Event
+import ru.rt.finance.features.user.presentation.UsersContract.State
 
-class DicExpenseViewModel(
-    private val loadDicExpensesUseCase: LoadDicExpensesUseCase,
+class UserViewModel(
+    private val loadUsersUseCase: LoadUsersUseCase,
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<State> = MutableStateFlow(State.Loading)
-
     val uiState = _uiState.asStateFlow()
 
     private val _action: Channel<Action> = Channel()
@@ -36,17 +34,17 @@ class DicExpenseViewModel(
         subscribeEvents()
     }
 
-    private fun showDicExpenses(sort: SORT) {
+    private fun showUsers() {
         viewModelScope.launch(ioDispatcher) {
             sendState(State.Loading)
-            loadDicExpensesUseCase
-                .invoke(sort)
+            loadUsersUseCase
+                .invoke()
                 .onSuccess {
-                    sendState(State.Content(dicExpenses = it))
+                    sendState(State.Content(users = it))
                 }.onFailure { error ->
                     val errorMessage = when (error) {
                         else -> {
-                            "Неизвестная ошибка:" + error.message.toString()
+                            "Неизвестная ошибка"
                         }
                     }
                     sendState(State.Error(ErrorModel(message = errorMessage)))
@@ -64,24 +62,10 @@ class DicExpenseViewModel(
 
     private fun handleEvent(event: Event) {
         when (event) {
-            is Event.OnViewReady -> {
-                showDicExpenses(event.sort)
-            }
-            is Event.OnAddDicExpenseClick -> {
-                navigateToAddDicExpense()
-            }
-            is Event.OnEditDicExpenseClick -> {
-                navigateToEditDicExpense()
+            is Event.OnViewReady -> showUsers()
+            is Event.OnUserClick -> { /* TODO: */
             }
         }
-    }
-
-    private fun navigateToAddDicExpense() {
-        sendAction(Action.NavigateToAddDicExpense)
-    }
-
-    private fun navigateToEditDicExpense() {
-        sendAction(Action.NavigateToEditDicExpense)
     }
 
     private fun sendAction(action: Action) {

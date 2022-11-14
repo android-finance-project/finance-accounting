@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation android:id="@+id/mobile_navigation"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/navigation_home">
+
+
+    <action
+        android:id="@+id/action_main_to_aboutus"
+        app:destination="@id/fragment_about_us" />
+
+    <fragment
+        android:id="@+id/fragment_about_us"
+        android:name="ru.rt.finance.features.aboutus.presentation.ui.AboutUsFragment"
+        android:label="О нас"
+        tools:layout="@layout/fragment_about_us">
+        <action
+            android:id="@+id/action_about_us_to_main_fragment"
+            app:destination="@id/MainFragment" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="ru.rt.finance.features.user.presentation.ui.UsersFragment"
+        android:label="Пользователи"
+        tools:layout="@layout/fragment_list_user" />
+
+
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="ru.rt.finance.features.dictonary.presentation.ui.DicExpenseFragment"
+        android:label="Категории расходов"
+        tools:layout="@layout/fragment_list_dic_expense">
+        <action
+            android:id="@+id/action_dic_expense_to_add"
+            app:destination="@id/add_dic_expense" />
+        <action
+            android:id="@+id/action_dic_expense_to_edit"
+            app:destination="@id/edit_dic_expense" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="ru.rt.finance.core.presentation.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+
+
+    <fragment
+        android:id="@+id/add_dic_expense"
+        android:name="ru.rt.finance.features.dictonary.presentation.ui.AddDicExpenseFragment"
+        android:label="добавление категории расхода"
+        tools:layout="@layout/fragment_dic_expense_add">
+        <action
+            android:id="@+id/action_add_dic_expense_to_navigation_dic_expense"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/edit_dic_expense"
+        android:name="ru.rt.finance.features.dictonary.presentation.ui.EditDicExpenseFragment"
+        android:label="редактирование категории расхода"
+        tools:layout="@layout/fragment_dic_expense_add">
+        <action
+            android:id="@+id/action_edit_dic_expense_to_navigation_dic_expense"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
+
+
+</navigation>

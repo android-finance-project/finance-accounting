@@ -4,6 +4,10 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.CoroutineDispatcher
 import ru.rt.finance.core.localdatabase.daointerface.DicExpenseDao
 import ru.rt.finance.core.localdatabase.daointerface.DicIncomeDao
+import ru.rt.finance.core.utils.SORT
+import ru.rt.finance.core.utils.SORT.ASC
+import ru.rt.finance.core.utils.SORT.DESC
+import ru.rt.finance.core.utils.SORT.NONE
 import ru.rt.finance.core.utils.safeUnitCall
 import ru.rt.finance.features.dictonary.DicIncomeRepository.Companion.DELTA_INCREMENT
 import ru.rt.finance.features.dictonary.data.model.dictionary.DicExpenseEntity
@@ -11,10 +15,24 @@ import ru.rt.finance.features.dictonary.data.model.dictionary.DicIncomeEntity
 
 class DicExpenseRepository(private val dicExpenseSource: DicExpenseDao, private val dispatcher: CoroutineDispatcher) {
 
-    suspend fun getInfo(): List<DicExpenseEntity>? =
-        withContext(dispatcher) {
-            dicExpenseSource.getInfo()
+    suspend fun getInfo(sort: SORT): List<DicExpenseEntity>? = withContext(dispatcher)
+    {
+        when (sort) {
+            ASC -> {
+                dicExpenseSource.getInfoAsc()
+            }
+            DESC -> {
+                dicExpenseSource.getInfoDesc()
+            }
+            NONE -> {
+                dicExpenseSource.getInfoNone()
+            }
+            else -> {
+                dicExpenseSource.getInfoNone()
+            }
         }
+
+    }
 
     suspend fun addDicExpense(info: DicExpenseEntity) {
         withContext(dispatcher) {
