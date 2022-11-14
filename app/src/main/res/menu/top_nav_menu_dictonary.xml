@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/sort"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/sort"
+        android:titleCondensed="@string/sort"></item>
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/search"
+        android:titleCondensed="@string/search" />
+
+    <item
+        android:id="@+id/filter"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/filter"
+        android:titleCondensed="@string/filter" />
+</menu>

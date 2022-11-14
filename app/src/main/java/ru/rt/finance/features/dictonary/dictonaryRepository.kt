@@ -1,18 +1,37 @@
 package ru.rt.finance.features.dictonary
 
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.CoroutineDispatcher
 import ru.rt.finance.core.localdatabase.daointerface.DicExpenseDao
 import ru.rt.finance.core.localdatabase.daointerface.DicIncomeDao
+import ru.rt.finance.core.utils.safeUnitCall
+import ru.rt.finance.features.dictonary.DicIncomeRepository.Companion.DELTA_INCREMENT
 import ru.rt.finance.features.dictonary.data.model.dictionary.DicExpenseEntity
 import ru.rt.finance.features.dictonary.data.model.dictionary.DicIncomeEntity
 
 class DicExpenseRepository(private val dicExpenseSource: DicExpenseDao, private val dispatcher: CoroutineDispatcher) {
 
+    suspend fun getInfo(): List<DicExpenseEntity>? =
+        withContext(dispatcher) {
+            dicExpenseSource.getInfo()
+        }
+
     suspend fun addDicExpense(info: DicExpenseEntity) {
         withContext(dispatcher) {
             dicExpenseSource.addDicExpense(info)
         }
+    }
+
+    suspend fun addDicExpenseResult(info: DicExpenseEntity): Result<Unit> {
+        val ret: Result<Unit>
+        withContext(dispatcher) {
+            ret = safeUnitCall { dicExpenseSource.addDicExpense(info) }
+        }
+        return ret
+    }
+
+    suspend fun getLastKey(): Int = withContext(dispatcher) {
+        dicExpenseSource.getLastKey() + DELTA_INCREMENT
     }
 
     suspend fun addDicExpenseAll(vararg info: DicExpenseEntity) {
@@ -25,6 +44,14 @@ class DicExpenseRepository(private val dicExpenseSource: DicExpenseDao, private 
         withContext(dispatcher) {
             dicExpenseSource.updateDicExpense(info)
         }
+    }
+
+    suspend fun updateDicExpenseResult(info: DicExpenseEntity): Result<Unit> {
+        val ret: Result<Unit>
+        withContext(dispatcher) {
+            ret = safeUnitCall { dicExpenseSource.updateDicExpense(info) }
+        }
+        return ret
     }
 
     suspend fun getDicExpenseById(id: Int) {
@@ -47,6 +74,15 @@ class DicExpenseRepository(private val dicExpenseSource: DicExpenseDao, private 
 }
 
 class DicIncomeRepository(private val dicIncomeSource: DicIncomeDao, private val dispatcher: CoroutineDispatcher) {
+
+    suspend fun getInfo(): List<DicIncomeEntity>? {
+        val ret: List<DicIncomeEntity>?
+        withContext(dispatcher) {
+            ret = dicIncomeSource.getInfo()
+
+        }
+        return ret
+    }
 
     suspend fun addDicIncome(info: DicIncomeEntity) {
         withContext(dispatcher) {
@@ -83,5 +119,8 @@ class DicIncomeRepository(private val dicIncomeSource: DicIncomeDao, private val
             dicIncomeSource.searchByName(searchQuery)
         }
     }
-}
 
+    companion object {
+        const val DELTA_INCREMENT: Int = 1
+    }
+}

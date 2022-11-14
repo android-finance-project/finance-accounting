@@ -10,6 +10,7 @@ import org.koin.core.logger.Level
 import ru.rt.finance.di.DiDispatcher.Companion.dispatcherModules
 import ru.rt.finance.di.DiRepository.Companion.repositoryModule
 import ru.rt.finance.di.DiRoom.Companion.roomModule
+import ru.rt.finance.di.DiUser.Companion.dicExpenseModule
 import ru.rt.finance.di.DiUser.Companion.usersModule
 
 class MainApplication : Application() {
@@ -21,7 +22,7 @@ class MainApplication : Application() {
             androidContext(this@MainApplication)
             androidFileProperties()
             fragmentFactory()
-            modules(dispatcherModules, roomModule, repositoryModule, usersModule)
+            modules(dispatcherModules, roomModule, repositoryModule, usersModule, dicExpenseModule)
         }
     }
 

@@ -18,7 +18,6 @@ interface DicIncomeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addDicIncomeAll(vararg info: DicIncomeEntity)
 
-
     @Update
     suspend fun updateDicIncome(info: DicIncomeEntity)
 
