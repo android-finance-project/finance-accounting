@@ -1,6 +1,7 @@
 package ru.rt.finance.features.dictonary.presentation.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -17,6 +18,9 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.rt.finance.R
+import ru.rt.finance.core.MainApplication.Companion.TAG
+import ru.rt.finance.core.utils.SORT
+import ru.rt.finance.core.utils.SORT.*
 import ru.rt.finance.databinding.FragmentListDicExpenseBinding
 import ru.rt.finance.features.dictonary.presentation.DicExpenseContract.Action
 import ru.rt.finance.features.dictonary.presentation.DicExpenseContract.Event
@@ -30,6 +34,11 @@ class DicExpenseFragment : Fragment(R.layout.fragment_list_dic_expense) {
 
     private lateinit var binding: FragmentListDicExpenseBinding
     private lateinit var dicExpenseListAdapter: DicExpenseListAdapter
+    private var orderBySort: SORT = NONE
+    private var statusFragmentLabel: String = "Статус "
+
+    // do you sure about one
+    private var filterByTable: String = "'%%'"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentListDicExpenseBinding.inflate(inflater, container, false)
@@ -45,18 +54,32 @@ class DicExpenseFragment : Fragment(R.layout.fragment_list_dic_expense) {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
 
                 menu.clear()
-                menuInflater.inflate(R.menu.top_nav_menu_dictonary, menu)
+                menuInflater.inflate(R.menu.top_menu_dictonary, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
 
                 when (menuItem.itemId) {
-                    R.id.filter -> { //TODO:
+                    R.id.filter -> { //TODO: firstly - fragment
                     }
                     R.id.sort -> { //TODO:
                         true
                     }
                     R.id.search -> { //TODO:
+                    }
+                    R.id.submenu_sort_acs -> {
+                        orderBySort = ASC
+                        viewModel.setEvent(Event.OnViewReady(orderBySort))
+                    }
+
+                    R.id.submenu_sort_decs -> {
+                        orderBySort = DESC
+                        viewModel.setEvent(Event.OnViewReady(orderBySort))
+                    }
+
+                    R.id.submenu_sort_free -> {
+                        orderBySort = NONE
+                        viewModel.setEvent(Event.OnViewReady(orderBySort))
                     }
                     else -> {//TODO:
                     }
@@ -74,7 +97,27 @@ class DicExpenseFragment : Fragment(R.layout.fragment_list_dic_expense) {
         }
         subscribeState()
         subscribeAction()
-        viewModel.setEvent(Event.OnViewReady)
+        viewModel.setEvent(Event.OnViewReady(orderBySort/*.toString()*/))
+        Log.d(TAG, "viewModel.setEvent(Event.OnViewReady=" + orderBySort.toString())
+    }
+
+    private fun setStatusLabel(label: String, sort: SORT): String {
+        return (
+            when (sort) {
+                ASC -> {
+                    "$label:  отсортировано по возрастанию"
+                }
+                DESC -> {
+                    "$label:  отсортировано по убыванию"
+                }
+                NONE -> {
+                    "$label:  не отсортировано"
+                }
+                else -> {
+                    "$label:  не отсортировано"
+                }
+            }
+            )
     }
 
     fun navigateToAddDicExpense() {
@@ -109,9 +152,13 @@ class DicExpenseFragment : Fragment(R.layout.fragment_list_dic_expense) {
 
     private fun handleAction(action: Action) {
         when (action) {
-            is Action.DialogMessage -> {}
-            is Action.DialogError -> {}
-            is Action.NavigateToAddDicExpense -> navigateToAddDicExpense()
+            is Action.DialogMessage -> {/*TODO:*/
+            }
+            is Action.DialogError -> {/*TODO:*/
+            }
+            is Action.NavigateToAddDicExpense -> {
+                navigateToAddDicExpense()
+            }
             is Action.NavigateToEditDicExpense -> {
                 navigateToEditDicExpense()
             }
@@ -124,11 +171,13 @@ class DicExpenseFragment : Fragment(R.layout.fragment_list_dic_expense) {
                 binding.progressBarLoad.isVisible = true
                 binding.buttonAddDicExpense.isVisible = false
                 binding.textError.isVisible = false
+                binding.textStatusFragment.isVisible = false
             }
             is State.Error -> {
                 binding.progressBarLoad.isVisible = false
                 binding.recyclerViewDicExpense.isVisible = false
                 binding.buttonAddDicExpense.isVisible = false
+                binding.textStatusFragment.isVisible = false
                 binding.textError.isVisible = true
                 binding.textError.text = state.errorModel.message
             }
@@ -137,6 +186,9 @@ class DicExpenseFragment : Fragment(R.layout.fragment_list_dic_expense) {
                 binding.recyclerViewDicExpense.isVisible = true
                 binding.buttonAddDicExpense.isVisible = true
                 binding.textError.isVisible = false
+                binding.textStatusFragment.isVisible = true
+                binding.textStatusFragment.text = setStatusLabel(statusFragmentLabel, orderBySort)
+
                 (binding.recyclerViewDicExpense.adapter as DicExpenseListAdapter).submitList(state.dicExpenses)
             }
         }

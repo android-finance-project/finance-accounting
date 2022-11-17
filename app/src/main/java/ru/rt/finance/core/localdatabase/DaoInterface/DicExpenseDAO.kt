@@ -32,7 +32,13 @@ interface DicExpenseDao {
     suspend fun deleteAllDicExpense()
 
     @Query("SELECT t1.* FROM ${Dictionary.tableNameDicExpense} As t1  ORDER BY name_dic_expense_entity ASC")
-    suspend fun getInfo(): List<DicExpenseEntity>?
+    suspend fun getInfoAsc(): List<DicExpenseEntity>?
+
+    @Query("SELECT t1.* FROM ${Dictionary.tableNameDicExpense} As t1  ORDER BY name_dic_expense_entity DESC")
+    suspend fun getInfoDesc(): List<DicExpenseEntity>?
+
+    @Query("SELECT t1.* FROM ${Dictionary.tableNameDicExpense} As t1  ORDER BY name_dic_expense_entity ")
+    suspend fun getInfoNone(): List<DicExpenseEntity>?
 
     @Query("SELECT * FROM  ${Dictionary.tableNameDicExpense}  WHERE name_dic_expense_entity LIKE '%' || :searchQuery || '%' ")
     suspend fun searchByName(searchQuery: String): List<DicExpenseEntity>?

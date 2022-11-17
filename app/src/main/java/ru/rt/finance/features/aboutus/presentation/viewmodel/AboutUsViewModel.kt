@@ -1,4 +1,4 @@
-package ru.rt.finance.features.dictonary.presentation.viewmodel
+package ru.rt.finance.features.aboutus.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,15 +10,14 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import ru.rt.finance.core.utils.SORT
-import ru.rt.finance.features.dictonary.domain.LoadDicExpensesUseCase
-import ru.rt.finance.features.dictonary.presentation.DicExpenseContract.State
-import ru.rt.finance.features.dictonary.presentation.DicExpenseContract.Action
-import ru.rt.finance.features.dictonary.presentation.DicExpenseContract.ErrorModel
-import ru.rt.finance.features.dictonary.presentation.DicExpenseContract.Event
+import ru.rt.finance.features.aboutus.domain.LoadAboutUsUseCase
+import ru.rt.finance.features.aboutus.presentation.AboutUsContract.State
+import ru.rt.finance.features.aboutus.presentation.AboutUsContract.Action
+import ru.rt.finance.features.aboutus.presentation.AboutUsContract.ErrorModel
+import ru.rt.finance.features.aboutus.presentation.AboutUsContract.Event
 
-class DicExpenseViewModel(
-    private val loadDicExpensesUseCase: LoadDicExpensesUseCase,
+class AboutUsViewModel(
+    private val loadAboutUsUseCase: LoadAboutUsUseCase,
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -36,13 +35,13 @@ class DicExpenseViewModel(
         subscribeEvents()
     }
 
-    private fun showDicExpenses(sort: SORT) {
+    private fun showAboutUs() {
         viewModelScope.launch(ioDispatcher) {
             sendState(State.Loading)
-            loadDicExpensesUseCase
-                .invoke(sort)
+            loadAboutUsUseCase
+                .invoke()
                 .onSuccess {
-                    sendState(State.Content(dicExpenses = it))
+                    sendState(State.Content(aboutUsModel = it))
                 }.onFailure { error ->
                     val errorMessage = when (error) {
                         else -> {
@@ -64,24 +63,16 @@ class DicExpenseViewModel(
 
     private fun handleEvent(event: Event) {
         when (event) {
-            is Event.OnViewReady -> {
-                showDicExpenses(event.sort)
+            is Event.OnViewReady -> showAboutUs()
+            is Event.OnCloseAboutUsClick -> {
+                navigateToMainFragment()
             }
-            is Event.OnAddDicExpenseClick -> {
-                navigateToAddDicExpense()
-            }
-            is Event.OnEditDicExpenseClick -> {
-                navigateToEditDicExpense()
-            }
+
         }
     }
 
-    private fun navigateToAddDicExpense() {
-        sendAction(Action.NavigateToAddDicExpense)
-    }
-
-    private fun navigateToEditDicExpense() {
-        sendAction(Action.NavigateToEditDicExpense)
+    private fun navigateToMainFragment() {
+        sendAction(Action.NavigateToMainFragment)
     }
 
     private fun sendAction(action: Action) {

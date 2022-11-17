@@ -1,5 +1,6 @@
 package ru.rt.finance.features.dictonary.presentation
 
+import ru.rt.finance.core.utils.SORT
 import ru.rt.finance.features.dictonary.data.model.dictionary.DicExpenseEntity
 
 class DicExpenseContract {
@@ -18,7 +19,8 @@ class DicExpenseContract {
     }
 
     sealed class Event {
-        object OnViewReady : Event()
+
+        data class OnViewReady(val sort: SORT) : Event()
         object OnAddDicExpenseClick : Event()
         object OnEditDicExpenseClick : Event()
     }

@@ -1,31 +1,24 @@
 package ru.rt.finance.di
 
-import org.koin.androidx.fragment.dsl.fragment
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import ru.rt.finance.core.localdatabase.daointerface.AboutUsData
 import ru.rt.finance.features.aboutus.AboutUsRepository
 import ru.rt.finance.features.aboutus.domain.LoadAboutUsUseCase
-import ru.rt.finance.features.aboutus.presentation.ui.AboutUsFragment
 import ru.rt.finance.features.aboutus.presentation.viewmodel.AboutUsViewModel
 import ru.rt.finance.features.dictonary.DicExpenseRepository
 import ru.rt.finance.features.dictonary.domain.LoadDicExpensesUseCase
-import ru.rt.finance.features.dictonary.presentation.ui.AddDicExpenseFragment
-import ru.rt.finance.features.dictonary.presentation.ui.DicExpenseFragment
-import ru.rt.finance.features.dictonary.presentation.ui.EditDicExpenseFragment
 import ru.rt.finance.features.dictonary.presentation.viewmodel.AddDicExpenseViewModel
 import ru.rt.finance.features.dictonary.presentation.viewmodel.DicExpenseViewModel
 import ru.rt.finance.features.dictonary.presentation.viewmodel.EditDicExpenseViewModel
 import ru.rt.finance.features.user.data.UserRepository
 import ru.rt.finance.features.user.data.presentation.ui.activity.viewmodel.UserViewModel
 import ru.rt.finance.features.user.domain.LoadUsersUseCase
-import ru.rt.finance.features.user.presentation.ui.UsersFragment
 
-class DiUser {
+class DiEntities {
     companion object {
         val usersModule = module {
-            fragment { UsersFragment() }
 
             viewModel {
                 UserViewModel(
@@ -46,9 +39,7 @@ class DiUser {
         }
 
         val dicExpenseModule = module {
-            fragment { DicExpenseFragment() }
-            fragment { AddDicExpenseFragment() }
-            fragment { EditDicExpenseFragment() }
+
             viewModel {
                 DicExpenseViewModel(
                     loadDicExpensesUseCase = get(),
@@ -68,6 +59,7 @@ class DiUser {
 
             factory { LoadDicExpensesUseCase(dicExpenseRepository = get()) }
 
+
             single<DicExpenseRepository> {
                 DicExpenseRepository(
                     dicExpenseSource = get(),
@@ -78,7 +70,6 @@ class DiUser {
         }
 
         val aboutUsModule = module {
-            fragment { AboutUsFragment() }
             viewModel {
                 AboutUsViewModel(
                     loadAboutUsUseCase = get(),

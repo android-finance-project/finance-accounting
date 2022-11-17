@@ -15,7 +15,6 @@ class UserRepository(private val userSource: UserDao, private val dispatcher: Co
             ret = userSource.getInfo()
 
         }
-        Log.d(TAG,"return ret "+ret?.size.toString())
         return ret
     }
 

@@ -6,8 +6,16 @@ import ru.rt.finance.core.localdatabase.daointerface.DicExpenseDao
 
 class DicExpenseLocalDataSource(private val dicExpenseDao: DicExpenseDao) {
 
-    suspend fun getInfo() {
-        dicExpenseDao.getInfo()
+    suspend fun getInfoNone() {
+        dicExpenseDao.getInfoNone()
+    }
+
+    suspend fun getInfoAsc() {
+        dicExpenseDao.getInfoAsc()
+    }
+
+    suspend fun getInfoDesc() {
+        dicExpenseDao.getInfoDesc()
     }
 
     suspend fun addDicExpense(info: DicExpenseEntity) {
